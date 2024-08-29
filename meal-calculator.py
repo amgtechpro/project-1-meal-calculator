@@ -18,7 +18,7 @@ class Food:
         self.total_calories = (protein * 4) + (carbs * 4) + (fat * 9)
         
     def __repr__(self):
-        return f"{self.name} contains {self.protein}grams of protein, {self.carbs}grams of carbs, and {self.fat}grams of fat. The total amount of macro-nutrients contained in {self.name} is {self.total_grams}, while the total calories amount to {self.total_calories}."
+        return f"{self.name} contains {self.protein} grams of protein, {self.carbs} grams of carbs, and {self.fat} grams of fat. The total amount of macro-nutrients contained in {self.name} is {self.total_grams} grams, while the total calories amount to {self.total_calories} calories."
     
 
 
@@ -83,7 +83,7 @@ def main():
             print("Current food items: ")
             while True:
                 for food_name, food_item in food_dict.items():
-                    print(f"{food_name} has Protein: {food_item.protein}grams, Carbs: {food_item.carbs}grams, and Fat: {food_item.fat}grams.")
+                    print(f"{food_name} has Protein: {food_item.protein} grams, Carbs: {food_item.carbs} grams, and Fat: {food_item.fat} grams, for a total of {food_item.total_calories} calories.")
                 
                 return_to_menu = input("Press 'm' to return to the menu: ")
                 if return_to_menu.lower() == 'm':
