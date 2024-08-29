@@ -23,11 +23,14 @@ class Food:
 
 
 chocolate = Food("Chocolate", 8, 35, 20)
+pizza = Food("Pizza", 34, 89, 68)
+soda = Food("Soda", 0, 33, 0)
+fried_cheese_sticks = Food("Fried Cheese Sticks", 12, 9, 14)
 
 print(chocolate)
 
 def main(): 
-    food_dict = {}
+    food_dict = {"Pizza": pizza, "Soda": soda, "Fried Cheese Sticks": fried_cheese_sticks}
     
     while True:
         
@@ -43,11 +46,12 @@ def main():
         if choice == '1':
             while True:
                 
-                name = input("Enter food name: ")
+                name = input("Enter food name: ").strip().lower().title()
                 protein = int(input("Enter protein content: "))
-                carbs = int(input ("Enter carbs content: "))
+                carbs = int(input ("Enter carb content: "))
                 fat = int(input("Enter fat content: "))
                 food_dict[name] = Food(name, protein, carbs, fat)
+                print(food_dict[name])
                 print(f"Added {name} successfully.")
             
                 return_to_menu = input("Press 'm' to return to the menu: ")
@@ -58,10 +62,11 @@ def main():
         elif choice == '2':
             while True:
                 
-                meal_items = input("Enter food items, separated by commas: ").split(',')
+                meal_items = input("Enter food items, separated by commas: ").strip().lower().split(',')
                 total_protein, total_carbs, total_fat = 0, 0, 0
                 for item in meal_items:
-                    food = food_dict.get(item.strip())
+                    item = item.strip().title()
+                    food = food_dict.get(item)
                     if food:
                         total_protein += food.protein
                         total_carbs += food.carbs
@@ -77,8 +82,8 @@ def main():
         elif choice == '3':
             print("Current food items: ")
             while True:
-                for food_name in food_dict.keys():
-                    print(f"{food_name}, ")
+                for food_name, food_item in food_dict.items():
+                    print(f"{food_name} has Protein: {food_item.protein}grams, Carbs: {food_item.carbs}grams, and Fat: {food_item.fat}grams.")
                 
                 return_to_menu = input("Press 'm' to return to the menu: ")
                 if return_to_menu.lower() == 'm':
