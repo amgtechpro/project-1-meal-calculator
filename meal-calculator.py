@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 import random
-import requests
 import os
 import json
 import csv
@@ -23,11 +22,8 @@ class Food:
     
 
 
-chocolate = Food("Chocolate", 8, 35, 20)
-pizza = Food("Pizza", 34, 89, 68)
-soda = Food("Soda", 0, 33, 0)
-fried_cheese_sticks = Food("Fried Cheese Sticks", 12, 9, 14)
-
+chocolate = Food("Chocolate", 5, 61, 31)
+print("\n\nAll food item values are measured against a 100 gram portion. So for any food item, when you see the protein, carb and fat macro-nutrient amounts, they are the amounts contained in a 100g portion of that food item. Any discrepancy between the final amount of macro-nutrients (the sum of protein, carb and fat) is likely due to the amount of water and fibre that the food item contains.\n\n")
 print(chocolate)
 
 
@@ -98,7 +94,7 @@ def save_data(food_dict):
 
 #3. Main Function - where the program logic resides
 def main(): 
-    food_dict = {"Pizza": pizza, "Soda": soda, "Fried Cheese Sticks": fried_cheese_sticks}
+    food_dict = {}
     
     while True:
         
