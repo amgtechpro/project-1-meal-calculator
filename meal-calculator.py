@@ -55,14 +55,25 @@ def get_random_quote():
 def load_from_json(filepath):
     with open(filepath, 'r') as file:
         data = json.load(file)
-        return {name: Food(name, *values) for name, values in data.items()}
+        return {
+            name: Food(
+                food_data['name'],
+                food_data['protein'],
+                food_data['carbs'],
+                food_data['fat']
+            )
+            for name, food_data in data.items()
+        }
 
 def load_from_csv(filepath):
     food_dict = {}
     with open(filepath, 'r') as file:
         reader = csv.reader(file)
+        next(reader)  # Skip the header row
         for row in reader:
-            name, protein, carbs, fat = row
+            if len(row) < 4:
+                continue  # Skip any rows that don't have enough columns
+            name, protein, carbs, fat, _total_grams, _total_calories = row
             food_dict[name] = Food(name, int(protein), int(carbs), int(fat))
     return food_dict
 
@@ -96,13 +107,20 @@ def save_data(food_dict):
 def main(): 
     food_dict = {}
     
+    try:
+        food_dict = load_from_json('food_database.json')
+        print("Data loaded from JSON on startup.")
+    except (FileNotFoundError, json.JSONDecodeError) as e:
+        print(f"Failed to load data from JSON: {e}")
+        print("Please load the data manually using the Load Data menu.")
+    
     while True:
         
         print("\nMenu:")
         print("1. Add new food item")
         print("2. Calculate meal macros")
         print("3. See a list of currently stored food items.")
-        print("4. Load data")
+        print("4. Load data - for developers only. ")
         print("5. Save and exit")
         print("6. Get a random quote about healthy eating")
         choice = input("Select an option: ")
@@ -158,38 +176,50 @@ def main():
         elif choice == '4':
             
             while True:
-                print("\nLoad Data Menu:")
+                print("\nLoad Data Menu (input a valid filename here, or program will crash):")
                 print("1. Load from JSON")
                 print("2. Load from CSV")
                 print("3. Load from Pickle")
-                print("4. Return to Main Menu")
+                print("4. Press 'm' to return to Main Menu")
                 load_choice = input("Select an option: ")
                 
                 if load_choice == '1':
-                    food_dict = load_from_json('food_database.json')
-                    print("Data loaded from JSON file.")
-                    print(f"Loaded {len(food_dict)} items.")
+                    file_path = input("Enter the JSON file path (eg. food_database.json): ").strip().lower()
+                    food_dict = load_from_json(file_path)
+                    print("Data loaded from JSON.")
+                    return_to_menu = input("Press 'm' to return to the menu: ")
+                    if return_to_menu.lower() == 'm':
+                        break
+                    else:
+                        print("Invalid input. Please enter 'm' to return to the menu.")
+                        
                 elif load_choice == '2':
-                    food_dict = load_from_csv('food_database.csv')
-                    print("Data loaded from CSV file.")
-                    print(f"Loaded {len(food_dict)} items.")
-                elif load_choice == '3':
-                    food_dict = load_from_pickle('food_database.pkl')
-                    print("Data loaded from Pickle file.")
-                    print(f"Loaded {len(food_dict)} items.")
-                elif load_choice == '4':
-                    break
-                else:
-                    print("Invalid choice. Please try again.")
+                    file_path = input("Enter the CSV file path (eg. food_database.csv): ").strip().lower()
+                    food_dict = load_from_csv(file_path)
+                    print("Data loaded from CSV.")
+                    return_to_menu = input("Press 'm' to return to the menu: ")
+                    if return_to_menu.lower() == 'm':
+                        break
+                    else:
+                        print("Invalid input. Please enter 'm' to return to the menu.")
                 
-                return_to_menu = input("Press 'm' to return to the load data menu: ")
-                if return_to_menu.lower() == 'm':
-                    continue
-                else:
-                    print("Invalid input. Returning to load data menu.")
-            
-            
-            
+                elif load_choice == '3':
+                    file_path = input("Enter the Pickle file path (eg. food_database.pkl): ").strip().lower()
+                    food_dict = load_from_pickle(file_path)
+                    print("Data loaded from Pickle.")
+                    return_to_menu = input("Press 'm' to return to the menu: ")
+                    if return_to_menu.lower() == 'm':
+                        break
+                    else:
+                        print("Invalid input. Please enter 'm' to return to the menu.")
+                
+                elif load_choice == 'm':
+                    break
+                
+                else: 
+                    print("Invalid option. Please try again.")
+                
+                     
         elif choice == '5': 
             while True:
                 save_data(food_dict)  # Save the data in all formats
