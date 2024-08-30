@@ -145,7 +145,7 @@ def main():
             while True:
                 
                 meal_items = input("Enter food items, separated by commas: ").strip().lower().split(',')
-                total_protein, total_carbs, total_fat = 0, 0, 0
+                total_protein, total_carbs, total_fat, total_calories = 0, 0, 0, 0
                 for item in meal_items:
                     item = item.strip().title()
                     food = food_dict.get(item)
@@ -153,7 +153,9 @@ def main():
                         total_protein += food.protein
                         total_carbs += food.carbs
                         total_fat += food.fat
-                print(f"Total Macros - Protein: {total_protein}, Carbs: {total_carbs}, Fat: {total_fat}")
+                        total_calories += food.total_calories
+                        
+                print(f"Your macro-nutrient consumption for this meal is - Protein: {total_protein}, Carbs: {total_carbs}, Fat: {total_fat}, with a total caloric value of {total_calories} calories.")
                 
                 return_to_menu = input("Press 'm' to return to the menu: ")
                 if return_to_menu.lower() == 'm':
