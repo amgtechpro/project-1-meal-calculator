@@ -10,3 +10,6 @@ One of the key features of this program is its flexibility in data storage. User
 Link to the Code on GitHub: You can check out the full code and contribute to the project here on GitHub.
 
 This Python-based meal calculator is a minimalistic yet useful tool that can help you track your macronutrient intake with ease. Whether you’re managing a condition like diabetes, working towards fitness goals, or just aiming for a balanced diet, this program is here to support you on your journey to better health.
+
+
+Link to the Medium article this readme was created with: https://medium.com/@amgtechpro/meal-calculator-a-python-terminal-based-macronutrient-calculator-for-better-nutritional-tracking-a0b7c73de7e8
